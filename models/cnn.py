@@ -30,6 +30,7 @@ class CNN(nn.Module):
         # After two conv + pool layers, image size becomes 7x7.
         # So, 64 channels * 7 * 7 features are flattened.
         self.fc1 = nn.Linear(64 * 7 * 7, 128)
+        self.dropout = nn.Dropout(0.5) # Add dropout layer
         # Output layer
         self.fc2 = nn.Linear(128, 10) # 10 classes for digits 0-9
 
@@ -54,7 +55,7 @@ class CNN(nn.Module):
         
         # Apply fc1 -> ReLU
         x = F.relu(self.fc1(x))
-        # Apply output layer
+        x = self.dropout(x) # Apply dropout
         x = self.fc2(x)
         return x
 
